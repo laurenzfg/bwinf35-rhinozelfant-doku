@@ -1,21 +1,20 @@
 \documentclass[parskip=full, DIV=14]{scrartcl}
 
 \usepackage[T1]{fontenc}
-\usepackage{selinput}% Eingabecodierung automatisch ermitteln …
-\SelectInputMappings{% … siehe <http://ctan.org/pkg/selinput>
+\usepackage{selinput}% Eingabecodierung automatisch ermitteln siehe <http://ctan.org/pkg/selinput>
+\SelectInputMappings{
 	adieresis={ä},
 	germandbls={ß},
-}
-\usepackage[sfdefault]{roboto}
+} 
 \usepackage{ngerman}
 
 \usepackage{amsmath}
 
 \usepackage{graphicx}
+\graphicspath{{Bilder/}}
 
 \usepackage{listings}
 \usepackage[dvipsnames]{xcolor}
-
 
 \lstset{language={Java},
         numbers=left,
@@ -44,7 +43,7 @@
 					{ö}{{\"o}}1
         }
 
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 
 \newcommand{\shellcmd}[1]{\texttt{\$ #1}\\}
 
@@ -61,9 +60,9 @@
 
 	Meine Umsetzung für "`Rhinozelfant"' erfolgte unter Arch Linux mit Java 1.8. Der Programmcode liegt sowohl als ausführbare JAR-Datei als auch als Quellcode vor. Der Quellcode unterstützt nur PNG-Dateien.
 
-	Bitte beachten Sie, dass im Normalfall die GUI öffnet, Sie jedoch auch auf der Kommandozeile ein Einzelbield analysieren können:
+	Bitte beachten Sie, dass im Normalfall die GUI sich öffnet, Sie jedoch auch auf der Kommandozeile ein Einzelbield analysieren können:
 
-	\shellcmd{java -jar Rhinozelfant.jar --cmd QUELLE ZIEL}
+	\shellcmd{java -jar Rhinozelfant.jar -{}-cmd QUELLE ZIEL}
 
 	\clearpage
 	% ----------------------------------------------------------------------------
@@ -72,4 +71,10 @@
 	\clearpage
 	\section{Umsetzung}
 		\input{umsetzung.tex}
+	\clearpage
+	\section{Überlegungen zur Laufzeit}
+		\input{laufzeit.tex}
+	\clearpage
+	\section{Beispiele}
+		\input{beispiele.tex}
 \end{document}

@@ -1,0 +1,9 @@
+Die zur Analyse eines Bildes benötigte Laufzeit setzt sich aus folgenden Komponenten zusammen:
+
+\begin{itemize}
+	\item Auflösung des Bildes
+	\item Anzahl Aufrufe von Filter 2 und 3
+	\item Größe des Rhinozelfanten
+\end{itemize}
+
+Der maßgebliche Faktor für die Laufzeit ist jedoch die Auflösung des Bildes, da von dieser auch die größe des Rhinozelfanten und die Ausführungszeit der Filter 2 und 3 abhängt. Die Laufzeit von Filter 1 hängt nur mit der Aufläsung, nicht mit dem Inhalt, zusammen da mit der verschachtelten for-Schleife jeder Pixel des Bildes einmal aufgerufen wird.

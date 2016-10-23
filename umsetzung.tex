@@ -1,0 +1,54 @@
+Die 3 Aufgaben aus der Lösungsidee habe ich in zwei Klassen aufgeteilt. Alle Funktionen, die mit dem eigentlichen farbigem Bild interagieren finden sich in der Klasse Bild (Schritte 1 und 4), die, die mit der Abstraktion arbeiten liegen in der Klasse RhinozelfantenSucher (Schritte 2 und 3).
+
+	\subsection {Suche nach gleichfarbigen Stellen}
+
+	Die Suche nach gleichfarbige Stellen findet mit Brute-Force statt, in jeder Reihe und jeder Spalte wird jedes benachbarte Feld auf die gleiche Farbe untersucht. Die in der Lösungsidee beschriebene Abstraktion für die nächsten Schritte habe ich als zweidimensionales Bool-Array realisiert. 
+
+	Feldern die einen gleichfarigen Nachbarn haben wird true zugeordnet, Feldern ohne gleichfarbige Nachbarn false.
+
+	In der GUI wird dieses Zwischenbild zu Debugzwecken angezeigt. Da die Filter das Array manipulieren werden, wird, wenn die entsprechende Flag gesetzt wurde, eine Deep Copy des Arrays gezogen.
+
+	\lstinputlisting[firstline=37, lastline=81]{code/Bild.java}	 
+
+	\subsection {Filterprozess}
+
+	Jeder der drei Filter ist in eine eigene Methode innerhalb von RhinozelfantenSucher aufgeteilt.
+
+		\subsubsection{unterbrechungsfreieStricheFilter()}
+
+		Ausreichend große unterbrechungsfreie Striche findet das Programm in jedes per for-Schleife in jeder Zeile zusammnhägende True-Bereiche sucht. Sobald ein zusammenhängeder Bereich abbricht, werden dessen Koordinaten, sofern er die Mindestrgröße hat, an die nächste Filterfunktion weitergegeben.
+		\lstinputlisting[firstline=29, lastline=44]{code/RhinozelfantSucher.java}
+
+		\subsubsection{rechteckFilter (int startX, int endeX, int startY)}
+		In dieser Funktion wird die Linie solange nach unten verschoben, bis in dieser Zeile zwischen startX und endeX kein unterbreichungsfreie Linie mehr vorliegt. Also wird ermittelt, was die maximale Höhe eines Rechteckes ist, dessen gesamte Fläche nur aus Feldern mit gleichfarbigem Nachbarn besteht. Dieses Rechteck wird dann an den letzten Filter, den anatomieFilter, weitergegeben.
+
+		\lstinputlisting[firstline=46, lastline=72]{code/RhinozelfantSucher.java}
+
+		\subsubsection{anatomieFilter (int startX, int endeX, int y)}
+		Dies ist der Hauptfilter, der leider auch recht Laufzeitintensiv ist.  Daher wurden in den vorherigen Filtern erste Stellen ausgeschlossen. Hier wird überprüft, ob an das soeben gefundene Rechteck Beine anliegen. Hierzu wird von jeder x-Koordinate im ersten und letzten Drittels der unteren Kante des Rechteckes der längstmögliche Strich (langestesBein) bestimmt. Überschreiten beide Striche das Minimum von 4 wird noch überprüft, ob zwischen den beiden Beinen einen Zwischenraum liegt.
+
+		Stimmen diese Bedingungen zu, liegt an dieser Stelle ein Rhinozelfant vor. Im nächsten Schritt wird der gesamte Elefant weiß markiert.
+
+		\lstinputlisting[firstline=74, lastline=136]{code/RhinozelfantSucher.java}
+
+	\subsection {Gesamtstruktur suchen}
+	Die zuerste geplante Lösung mithilfe von Rekursion funktionierte leider nicht, da es bei sehr großen Rhinozelfanten zu einem Pufferüberlauf kam.
+
+	Daher habe ich mich für eine stapelbasierte Lösung entschieden:
+
+	Jedes Feld, mit der vom anatomieFilter übergebenen urpsrungskoordiante angefangen, wird zunächst im 2D-Bild als false gespeichert. Ferner wird einem Stapel mit allen Koordinaten des Rhinozelfanten, dessen Nachbarn noch nicht bearbeitet wurden, hinzugefügt.
+
+	Danach wird für jede Koordinate im Stapel folgendes durchgeführt:
+
+	\begin{enumerate}
+		\item Diese Koordiante wird auf eine Liste mit den einzufärbenden Bildern gesetzt
+		\item Alle direkt anliegenden True-Feldern sind ebenfalls Teil der Rhinozoelefantenstruktur und werden deshalb, wie das Ursprungsfeld, nun als False markiert und dem Stapel hinzugefügt.
+	\end{enumerate}
+
+	So werden alle aneinander angrenzenden gleichfarbigen Felder des Rhinozelfanten markiert. Die Markierung der Felder als false dient dazu, dass der Markiervorgang nicht in Endlosschleifen verläuft und bei der weiteren Suche nach Rhinozelfanten dieser Rhinozelfant nicht noch einmal gefunden wird.
+	\lstinputlisting[firstline=138, lastline=196]{code/RhinozelfantSucher.java}
+
+	\subsection {Markieren der Flächen}
+
+	Von der letzten Stelle wurden alle zu Rhinozoelefanten gehörenden Punkte als Arraylist ausgegeben, daher wird nun wieder in der Klasse Bild einfach Punkt für Punkt im BufferedImage weiß markiert.
+	\lstinputlisting[firstline=83, lastline=91]{code/Bild.java}	 
