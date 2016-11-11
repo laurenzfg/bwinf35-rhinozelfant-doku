@@ -1,9 +1,7 @@
-Die zur Analyse eines Bildes benötigte Laufzeit setzt sich aus folgenden Komponenten zusammen:
+Die Laufzeit des Programmes wächst ungefähr Linear zu der Gesamtpixelzahl des Bildes, da der Großteil der Laufzeit für die Suche nach möglichen Hautschuppen und das Auszählen der Linienlängen genutzt wird.
 
-\begin{itemize}
-	\item Auflösung des Bildes
-	\item Anzahl Aufrufe von Filter 2 und 3
-	\item Größe des Rhinozelfanten
-\end{itemize}
+Die Beschaffenheit (anzahl möglicher Hautschuppen) spielt im Average-Case eine eher geringe Rolle, da die meisten Pixel bei der Hautschuppen und Linienananlyse mit konstanter Laufzeit ausgeschlossen werden können.
 
-Der maßgebliche Faktor für die Laufzeit ist jedoch die Auflösung des Bildes, da von dieser auch die größe des Rhinozelfanten und die Ausführungszeit der Filter 2 und 3 abhängt. Die Laufzeit von Filter 1 hängt nur mit der Aufläsung, nicht mit dem Inhalt, zusammen da mit der verschachtelten for-Schleife jeder Pixel des Bildes einmal aufgerufen wird.
+Im Best-Case, also zufälligem Rauschen, in dem keine Filter zum Einstz kommen, benötigt das Programm für 6 Mio. Pixel (2000x3000) 2.3s. 
+Wenn nun in einem Average-Case (Bsp. 4) einige Filterausführugen zum Finden eines im Bild vorhandenen Rhinozelfanten benötigt werden, steigt die Laufzeit marginal auf 2.6s an. 
+Im Worst-Case, nämlich einem komplett einfarbigen Bild, in dem dann alle Pixel mögliche Hautschuppen sind, werden zahlreiche komplette Filterdurchläufe durchgeführt, die Laufzeit beträgt dann 30s.
