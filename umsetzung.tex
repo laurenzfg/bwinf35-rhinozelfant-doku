@@ -1,8 +1,8 @@
-Die 3 Aufgaben aus der Lösungsidee habe ich in zwei Java-Klassen aufgeteilt. Alle Funktionen, die mit dem eigentlichen farbigem Bild interagieren finden sich in der Klasse Bild (Schritte 1 und 3), die, die mit der Abstraktion arbeiten, liegen in der Klasse RhinozelfantenSucher (Schritt 2).
+Die 3 Aufgaben aus der Lösungsidee haben wir in zwei Java-Klassen aufgeteilt. Alle Funktionen, die mit dem eigentlichen farbigem Bild interagieren finden sich in der Klasse Bild (Schritte 1 und 3), die, die mit der Abstraktion arbeiten, liegen in der Klasse RhinozelfantenSucher (Schritt 2).
 
 	\subsection {Suche nach möglichen Hautschuppen}
 
-	Die Suche nach möglichen Hautschuppen findet mit Brute-Force statt. Das heißt für jedes Pixel wird die Farbe mit den 9 umliegenden Pixeln verglichen. Sind mehr als zwei der umliegenden Felder gleichfarbig, handelt es sich um eine mögliche Hautschuppe. Das in der Lösungsidee beschriebene S/W-Bild für die nächsten Schritte habe ich als zweidimensionales Bool-Array realisiert. True entspricht schwarz (mögliche Hautschuppe), False weiß (keine Hautschuppe). 
+	Die Suche nach möglichen Hautschuppen findet mit Brute-Force statt. Das heißt für jedes Pixel wird die Farbe mit den 9 umliegenden Pixeln verglichen. Sind mehr als zwei der umliegenden Felder gleichfarbig, handelt es sich um eine mögliche Hautschuppe. Das in der Lösungsidee beschriebene S/W-Bild für die nächsten Schritte haben wir als zweidimensionales Bool-Array realisiert. True entspricht schwarz (mögliche Hautschuppe), False weiß (keine Hautschuppe). 
 
 	In der GUI wird dieses S/W-Bild zu Debugzwecken angezeigt. Da die Filter das Array manipulieren werden, wird, sofern die entsprechende Debug-Flag gesetzt wurde, an dieser Stelle eine Deep Copy des Arrays gezogen.
 
@@ -11,13 +11,13 @@ Die 3 Aufgaben aus der Lösungsidee habe ich in zwei Java-Klassen aufgeteilt. Al
 
 		\subsubsection{unterbrechungsfreieStricheFilter()}
 
-		Nach der Lösungsidee ausreichend lange Linien findet das Programm, indem es in jeder Zeile die Länge aufeinanderfolgende True-Bereiche zählt. Überschreitet die Länge eines Bereiches die Mindestlänge, wird die 1. und 2. x-Position (startX, endeX) sowie die Zeile (endeY) an den nächsten Filter weitergeben.
+		Nach der Lösungsidee ausreichend lange Linien findet das Programm, indem es in jeder Zeile die Länge aufeinanderfolgende True-Bereiche zählt. Überschreitet die Länge eines Bereiches die Mindestlänge, wird die 1. und 2. x-Position \texttt{(startX, endeX)} sowie die Zeile \texttt{(endeY)} an den nächsten Filter weitergeben.
 
 		\subsubsection{rechteckFilter (int startX, int endeX, int startY)}
 
-		In dieser wird Funktion überprüft, ob eine Zeile tiefer ebenfalls zwischen startX und endeX der davor gefundenen Linie sich eine Linie aus möglichen Hautschuppen befindet. Wenn dies der Fall ist, könnte zwischen startY (der oberen Kante) und der darunterliegenden Zeile ein Rechteck nur aus möglichen Hautschuppen gezeichnet werden. 
+		In dieser wird Funktion überprüft, ob eine Zeile tiefer ebenfalls zwischen \texttt{startX} und \texttt{endeX} der davor gefundenen Linie sich eine Linie aus möglichen Hautschuppen befindet. Wenn dies der Fall ist, könnte zwischen \texttt{startY} (der oberen Kante) und der darunterliegenden Zeile ein Rechteck nur aus möglichen Hautschuppen gezeichnet werden. 
 
-		Die untere Kante des Rechteckes wird solange nach unten verschoben, bis sich entweder eine Zeile findet, in der sich zwischen startX und endeX nicht ausschließlich mögliche Hautschuppen vorliegen oder die letzte Zeile erreicht ist.
+		Die untere Kante des Rechteckes wird solange nach unten verschoben, bis sich entweder eine Zeile findet, in der sich zwischen \texttt{startX} und \texttt{endeX} nicht ausschließlich mögliche Hautschuppen vorliegen oder die letzte Zeile erreicht ist.
 		
 		Überschreitet die Höhe des Rechtecks, also \(startY - endeY\), die in der Lösungsidee genannte Mindesthöhe, bedeutet dies, dass unter den im 1. Schritt gefundenen Strich ein "`Bauch"' gezeichnet werden kann. Dann werden die Koordinaten der unteren Kante des Recheckes an den letzten Filter weitergeben.
 
@@ -26,16 +26,16 @@ Die 3 Aufgaben aus der Lösungsidee habe ich in zwei Java-Klassen aufgeteilt. Al
 
 		Hier wird überprüft, ob an das soeben gefundene Rechteck Beine anliegen. Hierzu wird zunächst im ersten und letzten Drittel der unteren Kante des Rechteckes der längste nach unten gehende Strich (Bein) bestimmt.
 
-		Dies erfolgt indem, ähnlich wie beim vorherigen Filter, von jeder möglichen x-Koordinate im ersten und letzten Drittel überprüft wird, um wieviele Zeilen man einen Zeiger nach unten verschieben kann, ohne dass ein Pixel keine mögliche Hautschuppe (false) ist.
+		Dies erfolgt indem, ähnlich wie beim vorherigen Filter, von jeder möglichen x-Koordinate im ersten und letzten Drittel überprüft wird, um wieviele Zeilen man einen Zeiger nach unten verschieben kann, ohne dass ein Pixel keine mögliche Hautschuppe (False) ist.
 		
 		Überschreiten beide Striche das Minimum von 4px, wird ferner noch überprüft, ob zwischen den beiden Beinen ein Zwischenraum liegt, da bei einem Lebewesen sich zwischen den Hautschuppen der Beine Luft befindet. Dies wird durchgeführt, indem zwischen dem kürzeren Bein und dem gegenüberliegenden Bein ein Zeiger solange verschoben wird, bis auf eine Luftzelle gestoßen wird.
 
 		Stimmen all diese Bedingungen zu, ist um das gefundene Rechteck die Anatomie eines Rhinozelfanten gegeben. Im nächsten Schritt wird der gesamte Elefant weiß markiert.
 
 	\subsection {Gesamtstruktur suchen}
-	Die zuerste geplante Lösung mithilfe von Rekursion funktionierte leider nicht, da es bei sehr großen Rhinozelfanten zu einem Pufferüberlauf kam.
+	Die zuerste geplante Lösung mithilfe von Rekursion funktionierte leider nicht, da es bei den Testcases (6. Mio. Pixel) zu einem Pufferüberlauf kam.
 
-	Daher habe ich mich für eine stapelbasierte Lösung entschieden:
+	Daher haben wir uns für eine iterative Lösung entschieden:
 
 	Jedes Feld, mit der vom anatomieFilter übergebenen Urpsrungskoordiante angefangen, wird zunächst einem Stapel mit allen Koordinaten des Rhinozelfanten, die noch nicht bearbeitet wurden, hinzugefügt. Außerdem wird die Stelle im 2D-Bild auf False gesetzt, damit es bei der weiteren Suche nicht zu Endlosschleifen kommt.
 
