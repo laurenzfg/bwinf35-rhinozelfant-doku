@@ -1,7 +1,0 @@
-Die Laufzeit des Programmes wächst ungefähr linear zu der Gesamtpixelzahl des Bildes, da der Großteil der Laufzeit für die Suche nach möglichen Hautschuppen und das Auszählen der Linienlängen genutzt wird.
-
-Die Beschaffenheit (Anzahl möglicher Hautschuppen) spielt im Average-Case eine eher geringe Rolle, da die meisten Pixel bei der Hautschuppensuche und der Linienananlyse mit jeweils konstanter Laufzeit ausgeschlossen werden können.
-
-Im Best-Case, also einem Bild aus zufälligem Rauschen, in dem keine Filter zum Einsatz kommen, benötigt das Programm für 6 Mio. Pixel (2000x3000) 2.3s. 
-Wenn nun in einem Average-Case (Bsp. 4) einige Filterausführungen zum Finden eines im Bild vorhandenen Rhinozelfanten benötigt werden, steigt die Laufzeit marginal auf 2.6s an. 
-Im Worst-Case, nämlich einem komplett einfarbigen Bild, in dem alle Pixel mögliche Hautschuppen sind, werden zahlreiche komplette Filterdurchläufe benötigt, die Laufzeit beträgt dann 30s.
