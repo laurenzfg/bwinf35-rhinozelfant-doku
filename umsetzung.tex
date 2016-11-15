@@ -2,12 +2,12 @@ Die drei Aufgaben aus der Lösungsidee haben wir in zwei Java-Klassen aufgeteilt
 
 	\subsection {Suche nach möglichen Hautschuppen}
 
-	Die Suche nach möglichen Hautschuppen findet mit Brute Force statt. Das heißt für jedes Pixel wird die Farbe mit den neun umliegenden Pixeln verglichen. Sind mehr als zwei der umliegenden Felder gleichfarbig, handelt es sich um eine mögliche Hautschuppe. Das in der Lösungsidee beschriebene S/W-Bild für die nächsten Schritte haben wir als zweidimensionales Bool-Array realisiert. True entspricht schwarz (mögliche Hautschuppe), False weiß (keine Hautschuppe). 
+	Die Suche nach möglichen Hautschuppen findet mit Brute Force statt. Das heißt für jedes Pixel wird die Farbe mit den neun umliegenden Pixeln verglichen. Sind mehr als zwei der umliegenden Felder gleichfarbig, handelt es sich um eine mögliche Hautschuppe. Die in der Lösungsidee beschriebene S/W-Abstraktion für die nächsten Schritte haben wir als zweidimensionales Bool-Array realisiert. True entspricht schwarz (mögliche Hautschuppe), False weiß (keine Hautschuppe). 
 
-	In der GUI wird dieses S/W-Bild zu Debugzwecken angezeigt. Da die Filter das Array manipulieren werden, wird, sofern die entsprechende Debug-Flag gesetzt wurde, an dieser Stelle eine Deep Copy des Arrays gezogen.
+	In der GUI wird diese S/W-Abstraktion zu Debugzwecken angezeigt. Da die Filter das Array manipulieren werden, wird, sofern die entsprechende Debug-Flag gesetzt wurde, an dieser Stelle eine Deep Copy des Arrays gezogen.
 
 	\subsection {Filterprozess}
-	Nachdem nun das S/W-Bild an die Klasse RhinozelfantSucher übergeben wurde, werden die Hautschuppen, die tatsächlich Teil eines Rhinozelfanten sind, herausgefiltert. Jeder der drei Filter ist als eine eigene Methode innerhalb von RhinozelfantenSucher implementiert.
+	Nachdem nun die S/W-Abstraktion an die Klasse RhinozelfantSucher übergeben wurde, werden die Hautschuppen, die tatsächlich Teil eines Rhinozelfanten sind, herausgefiltert. Jeder der drei Filter ist als eine eigene Methode innerhalb von RhinozelfantenSucher implementiert.
 
 		\subsubsection{unterbrechungsfreieStricheFilter()}
 
@@ -39,7 +39,7 @@ Die drei Aufgaben aus der Lösungsidee haben wir in zwei Java-Klassen aufgeteilt
 
 	Daher haben wir uns für eine iterative Lösung entschieden:
 
-	Jedes Feld, mit der vom anatomieFilter übergebenen Urpsrungskoordiante angefangen, wird zunächst einem Stapel mit allen Koordinaten des Rhinozelfanten, die noch nicht bearbeitet wurden, hinzugefügt. Außerdem wird die Stelle im 2D-Bild auf False gesetzt, damit es bei der weiteren Suche nicht zu Endlosschleifen kommt.
+	Jedes Feld, mit der vom anatomieFilter übergebenen Urpsrungskoordiante angefangen, wird zunächst einem Stapel mit allen Koordinaten des Rhinozelfanten, die noch nicht bearbeitet wurden, hinzugefügt. Außerdem wird die Stelle in der Abstraktion auf False gesetzt, damit es bei der weiteren Suche nicht zu Endlosschleifen kommt.
 
 	Daraufhin wird für jede Koordinate im Stapel Folgendes durchgeführt:
 
